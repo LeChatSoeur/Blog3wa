@@ -1,0 +1,132 @@
+header{
+    background-image: url('image/BlogHeader01.jpg');
+}
+
+footer{
+    background-color: #1a202c;
+    color: navajowhite;
+}
+
+.img{
+    width: 80px
+}
+
+
+    /*//////////////////////////////*/
+    /*         Blog/posts/index     */
+    /*//////////////////////////////*/
+
+#newArticle{
+    margin-left: 10%;
+}
+
+#newArticle>a{
+    text-decoration: none;
+    color: black;
+}
+
+#postsIndexTable{
+
+    table-layout: auto;
+    width: 80%;
+}
+
+#postsIndexTable, td{
+    margin: auto;
+    padding: 5px 10px;
+    border-collapse: collapse;
+    border: 1px solid darkslategrey;
+    text-align: center;
+}
+
+#postsIndexTable>caption{
+    font-size: 2rem;
+ }
+
+#postsIndexTable>thead{
+    font-weight: bold;
+    background-color: #718096;
+}
+
+#postsIndexTable>tbody{
+    background-color: lightgrey;
+}
+
+.iconPostsIndex{
+    width: 1.2rem;
+    -webkit-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.iconPostsIndex:hover{
+    width: 1.7rem;
+    -webkit-transform: rotate(-20deg);
+    transform: rotate(-20deg);
+
+}
+
+    /*//////////////////////////////*/
+    /*         Blog/posts/create    */
+    /*//////////////////////////////*/
+
+#createArticle{
+    width: 80%;
+    margin: auto;
+    padding: 0 0.5rem;
+    background-color: #718096;
+}
+
+#createArticle>fieldset>legend{
+    margin: auto;
+    padding-top: 1rem;
+}
+
+.createTitleContent{
+    text-align: center;
+    padding-top: 0.5rem;
+
+}
+
+#title, #content{
+    width: 100%;
+    background-color: lightgrey;
+}
+
+.createbuttons{
+    padding-top: 0.5rem;
+    word-spacing: 2rem;
+    text-align: center;
+}
+
+/*//////////////////////////////*/
+/*         message error    */
+/*//////////////////////////////*/
+.errorAlreadyTaken{
+    color : darkred;
+}
+
+.sessionStatus{
+    padding: 0.5rem 0.5rem;
+    margin-left: 10%;
+    background-color: lightgreen;
+}
+
+
+/*
+////////////////////////
+
+ */
+
+
+html {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+}
+
+body {
+    margin: 0px;
+    padding: 0px;
+}
+
+/********************************************************/
