@@ -1,4 +1,4 @@
-@extends('home')
+@extends('homeDashboard')
 @section('content')
 
     <button id="newArticle"><a href="{{route('create')}}">Creer un nouvel article</a></button>

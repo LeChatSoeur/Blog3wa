@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Blog;
+namespace App\Http\Controllers\Blog\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\Blog\Post;
@@ -22,13 +22,13 @@ class PostController extends Controller
                 $posts->created_at;
             }
         */
-        return view('Blog\posts.index', compact('posts'));
+        return view('Blog\Dashboard\posts.index', compact('posts'));
     }
 
 
     public function create()
     {
-        return view('Blog\posts.create');
+        return view('Blog\Dashboard\posts.create');
     }
 
     public function store(Request $request)
@@ -40,7 +40,6 @@ class PostController extends Controller
             'content' => 'required|min:510',
         ]);
         //dd($data);
-        //$title = Post::all('title');
 
         if (!empty($data)) {
             $post = new Post;
@@ -60,7 +59,7 @@ class PostController extends Controller
     {
        //dd($id);
         $post = Post::find($id);
-        return view('Blog\posts.edit',compact('post'));
+        return view('Blog\Dashboard\posts.edit',compact('post'));
 
     }
 

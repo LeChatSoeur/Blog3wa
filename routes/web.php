@@ -21,16 +21,16 @@ Route::get('/accueil', function () {
 
 
 route::prefix('admin')->group(function() {
-    Route::get('liste-articles', '\App\Http\Controllers\Blog\PostController@index')->name('posts');
+    Route::get('liste-articles', '\App\Http\Controllers\Blog\Dashboard\PostController@index')->name('posts');
 
-    Route::post('article-creer', '\App\Http\Controllers\Blog\PostController@store')->name('store');
+    Route::post('article-creer', '\App\Http\Controllers\Blog\Dashboard\PostController@store')->name('store');
 
-    Route::get('creation-article', '\App\Http\Controllers\Blog\PostController@create')->name('create');
+    Route::get('creation-article', '\App\Http\Controllers\Blog\Dashboard\PostController@create')->name('create');
 
-    Route::get('article/{id}', '\App\Http\Controllers\Blog\PostController@edit')->name('edit');
+    Route::get('article/{id}', '\App\Http\Controllers\Blog\Dashboard\PostController@edit')->name('edit');
 
-    Route::patch('article/{id}', '\App\Http\Controllers\Blog\PostController@update')->name('update');
+    Route::patch('article/{id}', '\App\Http\Controllers\Blog\Dashboard\PostController@update')->name('update');
 
-    Route::delete('article/{id}', 'App\Http\Controllers\Blog\PostController@destroy')->name('destroy');
+    Route::delete('article/{id}', 'App\Http\Controllers\Blog\Dashboard\PostController@destroy')->name('destroy');
 
 });

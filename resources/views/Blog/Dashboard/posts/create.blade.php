@@ -1,4 +1,4 @@
-@extends('home')
+@extends('homeDashboard')
 @section('content')
 
     <form id="createArticle" action="{{route('store')}}" method="POST">
