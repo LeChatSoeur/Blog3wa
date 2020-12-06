@@ -15,7 +15,9 @@ class CreateCategoryProvincesTable extends Migration
     {
         Schema::create('category_provinces', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('region_id');
+            $table->unsignedBigInteger('region_id')->nullable();
+            $table->foreign('region_id')->references('id')
+                ->on('category_regions');
             $table->timestamps();
             $table->string('title', 255);
         });

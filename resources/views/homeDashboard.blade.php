@@ -1,13 +1,29 @@
-@include('../layouts.public.head')
-@include('../layouts.public.header')
-<!--
-    @include('../layouts.public.navDashboard')
--->
+@include('layouts.Dashboard.head')
+
+<body>
+<header>
+<div>
+    <img alt="" src="{{asset('image/logo/BlogNtrottersLogo.png')}}">
+</div>
+    <nav id="login">
+        <a href="{{route('disconnection')}}">Déconnexion</a>
+    </nav>
+</header>
+@include('layouts.Dashboard.navDashboard')
 
 
-<main>
-    @yield('content')
+<main id="mainHomeDashboard">
+
+    <section id="sectionIndex">
+        @yield('content')
+    </section>
+    <section id="newPage">
+    @yield('newPage')
 </main>
 
 
-@include('../layouts.public.footer')
+
+
+
+</main>
+</body>

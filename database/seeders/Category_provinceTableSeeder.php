@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Blog\Category\Category_province;
+use App\Models\Blog\Dashboard\Category\Category_province;
 use Illuminate\Database\Seeder;
 
 class Category_provinceTableSeeder extends Seeder
@@ -603,7 +603,7 @@ class Category_provinceTableSeeder extends Seeder
 
         $Nord = new Category_province();
         $Nord->region_id ="18";
-        $Nord->title = "Territoires du Nord-Ouest ";
+        $Nord->title = "Territoires-du-Nord-Ouest";
         $Nord->save();
 
     }

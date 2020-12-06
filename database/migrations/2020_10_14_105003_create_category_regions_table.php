@@ -15,7 +15,10 @@ class CreateCategoryRegionsTable extends Migration
     {
         Schema::create('category_regions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('pays_id');
+            $table->unsignedBigInteger('pays_id')->nullable();
+            $table->foreign('pays_id')->references('id')
+                ->on('category_pays');
+            schema::enableForeignKeyConstraints();
             $table->timestamps();
             $table->string('title', 255);
         });

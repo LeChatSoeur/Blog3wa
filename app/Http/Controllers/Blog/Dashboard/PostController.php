@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Blog\Dashboard;
 
 use App\Http\Controllers\Controller;
+use App\Models\Blog\Dashboard\Category\Category_pays;
+use App\Models\Blog\Dashboard\Slug;
 use App\Models\Blog\Post;
+use App\Repositories\PostsRepositoryInterface;
 use Illuminate\Http\Request;
 
 class PostController extends Controller
@@ -13,84 +16,57 @@ class PostController extends Controller
     {
         $posts = Post::all();
 
-        /*
-        if ($posts->created_at <= 1)
-        {
-            $posts->created_at->diffForHumans();
-        } else
-            {
-                $posts->created_at;
-            }
-        */
         return view('Blog\Dashboard\posts.index', compact('posts'));
     }
 
-
     public function create()
     {
-        return view('Blog\Dashboard\posts.create');
-    }
+        $categoryPays       = Category_pays::all();
+        return view('Blog\Dashboard\posts.create',
+            compact('categoryPays'));
 
-    public function store(Request $request)
+    }
+    // vérification et enregistrement de l'article créer
+    public function store(Request $request, PostsRepositoryInterface $PostRepository)
     {
-
-        $data = $request->validate([
-            // Validate test aussi le token du formulaire
-            'title' => 'required|unique:posts|max:255',
-            'content' => 'required|min:510',
-        ]);
-        //dd($data);
-
-        if (!empty($data)) {
-            $post = new Post;
-            $post->title    = $data['title'];
-            $post->content  = $data['content'];
-            $post->save();
-        }
-        return redirect('admin/liste-articles')->with('status', 'Article créer!');
+        $PostRepository->save($request);
+        return redirect()->route('posts')->with('status', 'Article créer!');
     }
 
-    public function show($id)
+    // upload image via la création d'articles
+    public function upload(Request $request, PostsRepositoryInterface $PostRepository)
     {
-        //
+        $PostRepository->upload($request);
     }
 
-    public function edit($id)
+
+
+    public function edit($slug)
     {
-       //dd($id);
-        $post = Post::find($id);
-        return view('Blog\Dashboard\posts.edit',compact('post'));
+        $categoryPays = Category_pays::all();
+
+        $slugId = Slug::where('slug', $slug)->get('id');
+        $slugId = $slugId[0]->id;
+        $post = Post::where('slug_id', $slugId)->get();
+        $post = $post[0];
+
+
+        return view('Blog\Dashboard\posts.edit',compact('post','categoryPays'));
 
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, $id, PostsRepositoryInterface $PostRepository)
     {
-
-            //'title' => 'required|unique:posts|max:255',
-
-        $data = $request->validate([
-            // l'ID du title est ignoré dans la requête pour le titre unique.
-            'title' => 'required|max:255|unique:posts,' . 'id',
-            'content' => 'required|min:510',
-        ]);
-        //dd($data);
-        if (!empty($data)) {
-            $post = Post::find($id);
-            $post->title    = $data['title'];
-            $post->content  = $data['content'];
-            $post->save();
-        }
-        return redirect('admin/liste-articles')->with('status', 'Article modifié!');
+        $PostRepository->update($request, $id);
+        return redirect()->route('posts')->with('status', 'Article modifié!');
     }
 
-    public function destroy($id)
+
+    public function destroy($id, PostsRepositoryInterface $PostRepository)
     {
-        //dd($id);
-        $post = Post::find($id);
-        $post->delete();
-        return redirect('admin/liste-articles')->with('status', 'Article supprimé!');
-
-
-
+        $PostRepository->destroy($id);
+        return redirect()->route('posts')->with('status', 'Article supprimé!');
     }
+
+
 }

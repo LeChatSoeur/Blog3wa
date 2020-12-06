@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Blog\Category\Category_pays;
+use App\Models\Blog\Dashboard\Category\Category_pays;
+use App\Models\Blog\Post;
 use Illuminate\Database\Seeder;
 
 class Category_paysTableSeeder extends Seeder
@@ -14,12 +15,12 @@ class Category_paysTableSeeder extends Seeder
      */
     public function run()
     {
-        $category_France = new Category_pays();
-        $category_France->title ="France";
-        $category_France->save();
+        $category = new Category_pays();
+        $category->title ="France";
+        $category->save();
 
-        $category_Canada = new Category_pays();
-        $category_Canada->title ="Canada";
-        $category_Canada->save();
+        $category = new Category_pays();
+        $category->title ="Canada";
+        $category->save();
     }
 }

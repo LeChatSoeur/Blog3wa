@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Blog\Category\Category_region;
+use App\Models\Blog\Dashboard\Category\Category_region;
 use Illuminate\Database\Seeder;
 
 class Category_regionTableSeeder extends Seeder
@@ -87,27 +87,27 @@ class Category_regionTableSeeder extends Seeder
 
         $RegionAtlantique = new Category_region();
         $RegionAtlantique->pays_id ="2";
-        $RegionAtlantique->title ="Région de l'Atlantique";
+        $RegionAtlantique->title ="Les-provinces-de-l'Atlantique";
         $RegionAtlantique->save();
 
         $CentreDuCanada = new Category_region();
         $CentreDuCanada->pays_id ="2";
-        $CentreDuCanada->title ="Centre du Canada";
+        $CentreDuCanada->title ="Le-centre-du-Canada";
         $CentreDuCanada->save();
 
         $ProvinceDesPrairies = new Category_region();
         $ProvinceDesPrairies->pays_id ="2";
-        $ProvinceDesPrairies->title ="Provences des Prairies";
+        $ProvinceDesPrairies->title ="Les-provinces-des-Prairies";
         $ProvinceDesPrairies->save();
 
         $CoteOuest = new Category_region();
         $CoteOuest->pays_id ="2";
-        $CoteOuest->title ="Côte Ouest";
+        $CoteOuest->title ="La-côte-Ouest";
         $CoteOuest->save();
 
         $Nord = new Category_region();
         $Nord->pays_id ="2";
-        $Nord->title ="Nord";
+        $Nord->title ="Les-territoires du Nord";
         $Nord->save();
 
 

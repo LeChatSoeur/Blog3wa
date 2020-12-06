@@ -131,6 +131,8 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+            'slug'      => 'malheureusement votre lien est déjà utilisé dans votre site, veuillez en choisir un autre.'
+
         ],
     ],
 
@@ -149,8 +151,8 @@ return [
         'name'                  => 'nom',
         'username'              => "nom d'utilisateur",
         'email'                 => 'adresse email',
-        'first_name'            => 'prénom',
-        'last_name'             => 'nom',
+        'firstName'            => 'prénom',
+        'lastName'             => 'nom',
         'password'              => 'mot de passe',
         'password_confirmation' => 'confirmation du mot de passe',
         'city'                  => 'ville',
@@ -175,5 +177,8 @@ return [
         'time'                  => 'heure',
         'available'             => 'disponible',
         'size'                  => 'taille',
+        'pseudo'                => 'identifiant',
+        'pays'                  => 'pays',
+        'slug'                  => 'lien',
     ],
 ];

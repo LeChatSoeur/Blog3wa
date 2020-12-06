@@ -17,8 +17,16 @@ class CreatePostsTable extends Migration
             $table->id();
             $table->timestamps();
             $table->string('title', 255);
-            $table->string('image', 255)->nullable();
-            $table->text('content');
+            $table->longText('content');
+            $table->string('pays', 150);
+            $table->string('region', 150)->nullable();
+            $table->string('province', 150)->nullable();
+            $table->unsignedBigInteger('slug_id')->index();
+            $table->foreign('slug_id')
+                ->references('id')
+                ->on('slugs')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
         });
     }
 
@@ -29,6 +37,6 @@ class CreatePostsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('posts');
+
     }
 }

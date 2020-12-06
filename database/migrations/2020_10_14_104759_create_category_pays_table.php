@@ -15,6 +15,10 @@ class CreateCategoryPaysTable extends Migration
     {
         Schema::create('category_pays', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('post_id')->nullable();
+            $table->foreign('post_id')->references('id')
+                ->on('posts')->index()->onDelete('restrict');
+            schema::enableForeignKeyConstraints();
             $table->timestamps();
             $table->string('title', 255);
         });
