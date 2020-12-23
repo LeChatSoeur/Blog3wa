@@ -1,0 +1,33 @@
+
+#a-propos {
+    text-align: center;
+    width: 80%;
+}
+
+#a-propos-image{
+    background-image : url('../../storage/uploads/ville-montreal_1608715376.jpg');
+    height : 301px;
+    display : flex;
+    justify-content: center;
+}
+#a-propos-widthContent{
+    width: 80%;
+}
+#lorem-ipsum-widthContent{
+    width: 50%;
+}
+#tyhtyhrtrh-widthContent{
+    width: 50%;
+}
+#new-page-image{
+    background-image : url('../../storage/uploads/Fontaine_taxe_infos_generales_1608716815.jpg');
+    height : 273px;
+    display : flex;
+    justify-content: center;
+}
+#new-page-widthContent{
+    width: 50%;
+}
+#3w-academy-widthContent{
+    width: 80%;
+}
