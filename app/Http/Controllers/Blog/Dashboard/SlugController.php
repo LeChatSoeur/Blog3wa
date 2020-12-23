@@ -25,6 +25,15 @@ class SlugController extends Controller
         }
 
 
+        if($request->child_id == 2)
+        {
+            $max = Slug::select('id')->where('child_id', 2)->count();
+
+            if($max >= 6)
+            {
+                return redirect()->action([DynamicPageController::class, 'index'])->with('message', 'Vous avez atteint la limite de page autorisé');
+            }
+        }
 
        $slug =$SlugRepository->saveSlug($request, $newSlug);
 

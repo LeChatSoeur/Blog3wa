@@ -23,13 +23,12 @@ class SlugRepository implements SlugsRepositoryInterface
 
         ]);
 
-                $Slug = new Slug();
-                $Slug->slug = $slug;
-                $Slug->nameNav = $data['nameNav'];
-                $Slug->child_id = $data['child_id'];
-                $Slug->save();
-                return $Slug;
-
+        $Slug = new Slug();
+        $Slug->slug = $slug;
+        $Slug->nameNav = $data['nameNav'];
+        $Slug->child_id = $data['child_id'];
+        $Slug->save();
+        return $Slug;
     }
 
     public function deleteSlugPage($slugsNav)
