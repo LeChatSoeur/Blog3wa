@@ -1,3 +1,5 @@
+'use strict'
+
 let parentId = null;
 
 function prepare()
@@ -57,7 +59,6 @@ function checkJson(json, dataComment)
     }
     else
     {
-        // on gère les erreurs
         error();
     }
 }
@@ -99,6 +100,8 @@ function commentPoster(json)
                 divChild.append(name);
                 divChild.append(date);
                 divChild.append(comment);
+                divChild.style.marginLeft = "40px";
+                divChild.style.backgroundColor = "#cfcbcb"
             }
        }
     }
@@ -136,6 +139,8 @@ function error()
     deleteErrorTime(form, p)
 }
 
+
+
 function deleteErrorTime(form, p) {
 
     setTimeout( ()=>{
@@ -171,5 +176,7 @@ document.addEventListener('DOMContentLoaded', () =>{
             document.getElementById('parent_id').value = parentId;
         }
     });
+
+
 });
 

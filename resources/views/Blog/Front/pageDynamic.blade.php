@@ -1,15 +1,21 @@
 @extends('homeFront')
 @section('content')
 
-    <section id="ViewArticle">
-<p>salut</p>
-        <article class="viewArticle" >
-            {!!($page[0]->content) !!}
-            {!!($page[0]->slug) !!}
 
-        </article>
+<section id="viewPageDynamic">
 
-    </section>
+    <div id="{{$slugId->slug}}-image">
+        @isset($choiceLayout->title)
+        <h2 class="titleHeader">{!!($choiceLayout->title) !!}</h2>
+        @endisset
+    </div>
+    <article id="{{$slugId->slug}}-widthContent" >
+
+        {!!($choiceContent->content) !!}
+
+    </article>
+
+</section>
 
 
 @endsection

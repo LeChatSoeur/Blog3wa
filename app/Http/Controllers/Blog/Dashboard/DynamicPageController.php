@@ -3,70 +3,72 @@
 namespace App\Http\Controllers\Blog\Dashboard;
 
 use App\Http\Controllers\Controller;
-use App\Models\Blog\Dashboard\Choice_layout;
-use App\Models\Blog\Dashboard\Choicelayout;
-use App\Models\Blog\Dashboard\Slug;
 use App\Repositories\DynamicPagesRepositoryInterface;
+use App\Repositories\NavsRepositoryInterface;
+use App\Repositories\SlugsRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 
 class DynamicPageController extends Controller
 {
+    public function index(NavsRepositoryInterface $NavRepository, SlugsRepositoryInterface $slugsRepository)
+    {
+
+        $PageListArticles = $NavRepository->listArticles();
+
+        // ordonner  la nav par le orderNav_id
+        $orderNav = $NavRepository->orderNav();
+
+
+        // ordonner le tableau par le orderNav_id
+        $slugsNav = $NavRepository->slugsNav();
+
+
+        // si l'user stop le processus de création de page, le slug est recherché et supprimé.
+       $slugsNav = $slugsRepository->deleteSlugPage($slugsNav);
+
+
+        return view('Blog\Dashboard\dynamicPage.menu', compact('PageListArticles','slugsNav','orderNav'));
+    }
+
     public function createSlug()
     {
-        return view('Blog\Dashboard\dynamicPage.choiceSlug');
+        $child_id = 2;
+        return view('Blog\Dashboard\dynamicPage.choiceSlug', compact('child_id'));
     }
 
-
-
-    public function storeSlug(Request $request, DynamicPagesRepositoryInterface $DynamicPageRepository)
+    public function saveLayout(Request $request, DynamicPagesRepositoryInterface $DynamicPageRepository)
     {
-        // convertit le slug
-        $slug = Str::slug($request->slug);
-        $test = Slug::where('slug', $slug)->first();
 
-        // s'il existe dans la base on retourne une erreur sinon on save();
-        if($test !== null)
+        $choiceLayout = $DynamicPageRepository->saveChoiceLayout($request);
+        $slug = $choiceLayout->slug->slug;
+
+
+        // s'il y a une image on commence par la sauvegarder avec la height
+        if($choiceLayout->header_image !== null)
         {
-            return redirect()->route('createSlug')->with('error', 'erreur');
+            $string = $DynamicPageRepository->PrepareHeaderDynamic($slug, $choiceLayout);
+            $DynamicPageRepository->saveStyleDynamic($slug, $string);
         }
-        else
-            {
-                $DynamicPageRepository->save($request, $slug);
-                //return view('Blog\Dashboard\dynamicPage.choiceLayout');
-                return redirect()->route('choiceLayout', compact('slug'));
-            }
+
+        // ensuite la largeur du content
+        $string = $DynamicPageRepository->prepareContentDynamic($slug, $choiceLayout);
+        $DynamicPageRepository->saveStyleDynamic($slug, $string);
+
+
+        return view('Blog.Dashboard.dynamicPage.choiceContent', compact('choiceLayout'));
+
     }
 
 
-
-    public function choiceLayout($slug)
+    public function saveContent(Request $request, DynamicPagesRepositoryInterface $DynamicPageRepository)
     {
-        return view('Blog\Dashboard\dynamicPage.choiceLayout', compact('slug'));
+
+        $DynamicPageRepository->saveChoiceContent($request);
+
+        return view('Blog\Dashboard\posts.index');
     }
 
 
-
-
-    public function storeLayout(Request $request, DynamicPagesRepositoryInterface $DynamicPageRepository)
-    {
-        $slug = $request->valide;
-
-        $DynamicPageRepository->saveLayout($request);
-        return redirect()->route('choiceContent', compact('slug'));
-
-    }
-
-    public function choiceContent($request, DynamicPagesRepositoryInterface $DynamicPageRepository)
-    {
-        $ChoiceContent =  $DynamicPageRepository->loadChoiceContent($request);
-        $contentExplode = $DynamicPageRepository->ExplodeChoiceContent($ChoiceContent);
-
-        return view('Blog\Dashboard\dynamicPage.choiceContent', compact('contentExplode'));
-
-
-
-    }
 }
 
 

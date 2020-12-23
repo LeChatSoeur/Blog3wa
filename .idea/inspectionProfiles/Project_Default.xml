@@ -82,8 +82,15 @@
     <inspection_tool class="HtmlUnknownAttribute" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="1">
+          <list size="8">
             <item index="0" class="java.lang.String" itemvalue="value" />
+            <item index="1" class="java.lang.String" itemvalue="dataid" />
+            <item index="2" class="java.lang.String" itemvalue="inkscape:version" />
+            <item index="3" class="java.lang.String" itemvalue="sodipodi:docname" />
+            <item index="4" class="java.lang.String" itemvalue="inkscape:groupmode" />
+            <item index="5" class="java.lang.String" itemvalue="inkscape:label" />
+            <item index="6" class="java.lang.String" itemvalue="inkscape:connector-curvature" />
+            <item index="7" class="java.lang.String" itemvalue="html" />
           </list>
         </value>
       </option>
@@ -92,7 +99,7 @@
     <inspection_tool class="HtmlUnknownTag" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="myValues">
         <value>
-          <list size="7">
+          <list size="11">
             <item index="0" class="java.lang.String" itemvalue="nobr" />
             <item index="1" class="java.lang.String" itemvalue="noembed" />
             <item index="2" class="java.lang.String" itemvalue="comment" />
@@ -100,6 +107,10 @@
             <item index="4" class="java.lang.String" itemvalue="embed" />
             <item index="5" class="java.lang.String" itemvalue="script" />
             <item index="6" class="java.lang.String" itemvalue="fieldset" />
+            <item index="7" class="java.lang.String" itemvalue="g" />
+            <item index="8" class="java.lang.String" itemvalue="path" />
+            <item index="9" class="java.lang.String" itemvalue="metadata" />
+            <item index="10" class="java.lang.String" itemvalue="defs" />
           </list>
         </value>
       </option>

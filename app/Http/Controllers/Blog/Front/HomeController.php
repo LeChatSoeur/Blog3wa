@@ -3,59 +3,77 @@
 namespace App\Http\Controllers\Blog\Front;
 
 use App\Http\Controllers\Controller;
-use App\Models\Blog\Dashboard\Choicelayout;
+use App\Models\Blog\Dashboard\Choice_content;
+use App\Models\Blog\Dashboard\Choice_layout;
 use App\Models\Blog\Dashboard\Slug;
 use App\Models\Blog\Front\Comment;
 use App\Models\Blog\Post;
-use Illuminate\Http\Request;
+use App\Repositories\NavsRepositoryInterface;
+use App\Repositories\PostRepository;
 
 
 class HomeController extends Controller
 {
-    public function index()
+
+
+    public function index(NavsRepositoryInterface $NavRepository)
     {
         $posts = Post::all();
-        return view('Blog\Front.index',compact('posts'));
+        $orderNav =$NavRepository->navSlug();
+        $listArticles = $NavRepository->listArticles();
+
+        return view('Blog\Front.index', compact('posts', 'orderNav', 'listArticles'));
     }
 
-    public function viewArticle($slug)
+
+
+    public function viewArticle($slug, NavsRepositoryInterface $NavRepository, PostRepository $PostRepository)
     {
+        $orderNav =$NavRepository->navSlug();
+        $listArticles = $NavRepository->listArticles();
 
-        $slugId = Slug::where('slug', $slug)->get('id');
-        $slugId = $slugId[0]->id;
-        $post = Post::where('slug_id', $slugId)->get();
-        $post = $post[0];
+        $post = $PostRepository->post($slug);
 
-
-        $comments = Comment::where('post_id', $post->id )->get();
+        $comments = Comment::where('post_id', $post->id)->get();
         $commentsParent = [];
         $commentsChild = [];
 
-        foreach($comments as $comment)
-        {
-            if($comment->parent_id === null)
-            {
+        foreach ($comments as $comment) {
+            if ($comment->parent_id === null) {
                 $commentsParent [] = $comment;
-            } else
-            {
+            } else {
                 $commentsChild [] = $comment;
             }
         }
 
-        return view('Blog\Front\viewArticle',compact(
+        return view('Blog\Front\viewArticle', compact(
             'post',
             'commentsChild',
             'commentsParent',
-            'slugId'));
+            'orderNav',
+            'listArticles'));
 
     }
 
-    public function pageDynamic($slug)
+    public function pageDynamic($slug, NavsRepositoryInterface $NavRepository)
     {
+        // page liste d'article que l'user ne peut modifier ou supprimer
+        $listArticles = $NavRepository->listArticles();
 
-        $page = Choicelayout::where('slug', $slug)->get();
+        $orderNav =$NavRepository->navSlug();
 
-        return view('Blog\Front.pageDynamic', compact('page'));
+        $slugId = Slug::select('id', 'slug')->where('slug', $slug)->first();
+
+        $choiceLayout = Choice_layout::select('title')->where('slug_id', $slugId->id)->first();
+
+        $choiceContent = Choice_content::select('content')->where('slug_id', $slugId->id)->first();
+
+
+        return view('Blog\Front.pageDynamic', compact('slugId',
+                                                        'choiceLayout',
+                                                                    'choiceContent',
+                                                                    'listArticles',
+                                                                    'orderNav'));
     }
 
 }

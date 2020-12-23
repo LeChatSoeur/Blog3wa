@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-
-class Choice_layout extends Model
+class Choice_content extends Model
 {
     public function slug(): BelongsTo
     {

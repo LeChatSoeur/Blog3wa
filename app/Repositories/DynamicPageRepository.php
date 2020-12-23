@@ -4,6 +4,7 @@
 namespace App\Repositories;
 
 
+use App\Models\Blog\Dashboard\Choice_content;
 use App\Models\Blog\Dashboard\choice_layout;
 use App\Models\Blog\Dashboard\Slug;
 use Illuminate\Support\Str;
@@ -11,134 +12,159 @@ use Illuminate\Support\Str;
 class DynamicPageRepository implements DynamicPagesRepositoryInterface
 {
 
-    public function save($request, $slug)
+    public function loadChoiceContent($slug)
     {
-        $request->validate([
-            // Validate test aussi le token du formulaire
-            'slug' => 'required|min:5|max:50',
-        ]);
-
-            $Slug = new Slug();
-            $Slug->slug = $slug;
-            $Slug->save();
-
-    }
-
-    public function saveLayout($request)
-    {
-        $data = $request->validate([
-            // Validate test aussi le token du formulaire
-            'choiceLayout'  => 'required|min:10|max:17',
-            'valide'        => "required",
-        ]);
-
-        // compare si le choiceLayout existe par rapport au choix  que l'on propose.
-        $choiceLayout = $data['choiceLayout'];
-
-        if(($choiceLayout !== 'content-80_null') &&
-            ($choiceLayout !== 'content-50_null') &&
-            ($choiceLayout !== 'content-80_header') &&
-            ($choiceLayout !== 'content-50_header'))
-        {
-            die; // erreur a gerer ( rediction)
-        }
-
-        // compare si le slug reçu est bien dans la BD
-        $slugs = Slug::all();
-
-        foreach ($slugs as $slug)
-        {
-            if($data['valide'] === $slug->slug)
-            {
-                $slug_id = $slug->id;
-                // si tout est ok on sauvegarde
-                $page = new choice_layout();
-                $page->choiceLayout = $data['choiceLayout'];
-                $page->slug_id = $slug_id;
-                $page->save();
-            }
-        }
-
-    }
-
-    public function loadChoiceContent($request)
-    {
-        $slug = Slug::where('slug', $request)->first('id');
+        $slug = Slug::where('slug', $slug)->first('id');
         return Choice_layout::where('slug_id', $slug->id)->first('choiceLayout');
     }
 
-    public function ExplodeChoiceContent($content) : array
-    {
-        $contentExplode = explode("_", $content->choiceLayout);
 
-        $contentExplode = array("width" => $contentExplode[0], "header" =>$contentExplode[1]);
-        return $contentExplode;
-    }
-
-    public function PrepareAjaxContent($request)
+    public function saveChoiceLayout($request)
     {
+        $id =  Slug::select('id')->where('slug', $request->slug)->first();
+
+
         $data = $request->validate([
-            // Validate test aussi le token du formulaire
-            'checkbox' => 'required|min:10|max:17',
+            'title' => 'nullable',
+            'headerHeight' => 'nullable',
+            'image' => 'nullable',
+            'choiceLayout' => 'required|min:15|max:17',
+            'slug' => 'required|',
+            'slug_id' => 'unique:choice_layouts'
         ]);
-        //explode $request pour :
-                                //récupérer la width du content
-                                // savoir s'il y a un header ( si oui on récupère sa hauteur ligne XXX)
-                                // sauvegarder en BD
-        $contentExplode = explode("_", $data['checkbox']);
-        $headerExplode  = explode("-", $contentExplode[0] );
 
-        $contentWidth = array("content-width" => $headerExplode[1] );
-        $header = array("header" =>$contentExplode[1]);
+        // explode choiceLayout pour récupérer la width du content
+        $headerExplode = explode("_", $data['choiceLayout']);
+        $contentExplode = explode("-", $headerExplode[0]);
 
-        return [$contentWidth, $header];
+        $contentWidth = $contentExplode[1];
 
 
 
-
-
-        // écrire le title
-        //recuperer le title
-
-        //pense bete j'ai un fait un repository pour upload d'image
-        //  ici le content
-        // un autre pour sauvegarder le tout !
-
-        // après ca il me reste le css dynamique pour l'enregistrer en BD
-        // ensuite je peux faire l'aside
-
-
-
+        $layout = new Choice_layout();
+        $layout->content_width = $contentWidth;
+        $layout->header_image = $data['image'];
+        $layout->header_height = $data['headerHeight'];
+        $layout->title = $data['title'];
+        $layout->slug_id = $id->id;
+        $layout->save();
+        return $layout;
     }
 
-    public function UploadAjaxImage($request)
+    public function saveChoiceContent($request)
     {
 
-        if($request->hasFile('img')) {
-            //get filename with extension
+        $data = $request->validate([
+            'slug' => 'required',
+            'content' => 'required',
+        ]);
 
-            $image = $request->file('img');
-            $filenamewithextension = $request->file('img')->getClientOriginalName();
 
-            //get filename without extension
-            $filename = pathinfo($filenamewithextension, PATHINFO_FILENAME);
+        if (!empty($data)) {
 
-            //get file extension
-            $extension = $request->file('img')->getClientOriginalExtension();
-
-            //filename to store
-            $filenametostore = $filename.'_'.time().'.'.$extension;
-
-            //Upload File
-            $request->file('img')->storeAs('public/uploads', $filenametostore);
-
-            return ('uploads/' . $filenametostore);
+            $layout = new Choice_content();
+            $layout->content = $data['content'];
+            $layout->slug_id = $data['slug'];
+            $layout->save();
         }
-        return false;
     }
 
-    public function saveAjaxPageDynamic($data)
+    public function PrepareHeaderDynamic($slug, $choiceLayout)
     {
-        dd($content);
-    }
+    // on prepare la règle css dynamique
+            $image = $choiceLayout->header_image;
+            $height = $choiceLayout->header_height.'px';
+
+            $string = "#$slug-image{
+    background-image : url('../../storage/uploads/$image');
+    height : $height;
+    display : flex;
+    justify-content: center;
 }
+";
+
+
+        return ["header_image" => $choiceLayout->header_image,
+            "string" => $string
+        ];
+    }
+
+
+    public function prepareContentDynamic($slug, $choiceLayout)
+    {
+    // on prepare la règle css dynamique
+        $widthContent = $choiceLayout->content_width.'%';
+
+        $string = "#$slug-widthContent{
+    width: $widthContent;
+}
+";
+
+
+        return ["header_image" => $choiceLayout->null,
+            "string" => $string
+        ];
+    }
+
+
+    public function saveStyleDynamic($slug,$string)
+    {
+
+        //recupère la longueur du fichier css
+        $fileSize = filesize("../public/storage/css/styleDynamique.css");
+
+        // ouvre et lecture du fichier
+        $handle = fopen("../public/storage/css/styleDynamique.css", 'rb');
+        $content = fread($handle, $fileSize);
+
+
+        if(($string['header_image']) !== null)
+        {
+           // return false si strrpos ne trouve pas #slug-image dans styleDynamique.css
+
+            $stringStart = strrpos($content, "#$slug-image", 0);
+            $stringEnd = strpos($content, '}', ($stringStart));
+            $stringFinish = $string['string'];
+
+
+        // sinon il indique le numéro du premier octet
+        }
+        else
+            {
+            $stringStart = strrpos($content, "#$slug-widthContent", 0);
+            $stringEnd = strpos($content, '}', ($stringStart));
+            $stringFinish = $string['string'];
+            }
+
+
+        // la règle css existe
+        if($stringStart !== false)
+        {
+            // on recupère sa position exacte en octet
+            $stringSize =  ($stringEnd + 1) - $stringStart;
+
+            // on remplace
+            $test = substr_replace($content, $stringFinish, $stringStart, $stringSize);
+
+
+            $handle = fopen("../public/storage/css/styleDynamique.css", 'wb+');
+            fwrite($handle, $test);
+
+        }
+        // sinon on créer la règle css à la suite
+        else
+        {
+            $handle = fopen("../public/storage/css/styleDynamique.css", 'ab+');
+            fwrite($handle, $stringFinish );
+
+
+        }
+        fclose($handle);
+
+
+        }
+
+}
+
+
+

@@ -20,7 +20,7 @@ class CreateCommentsTable extends Migration
             $table->foreign('post_id')
                 ->references('id')
                 ->on('posts')
-                ->onDelete('restrict');
+                ->onDelete('cascade');
             schema::enableForeignKeyConstraints();
             $table->unsignedBigInteger('parent_id')->nullable();
             $table->foreign('parent_id')

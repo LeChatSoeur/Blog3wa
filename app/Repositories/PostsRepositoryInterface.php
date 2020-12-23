@@ -8,9 +8,9 @@ interface PostsRepositoryInterface
 {
     public function save($request);
 
-    public function update($request, $id);
+    public function post($slug);
 
-    public function upload($request);
+    public function update($request, $id);
 
     public function destroy($id);
 

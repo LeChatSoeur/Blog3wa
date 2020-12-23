@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Blog;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Repositories\UserRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -12,81 +13,58 @@ class UserController extends Controller
 {
     public function register()
     {
-        return view('Blog\Front.user');
+        $user = User::select('id')->first();
+
+        // au maximum un utilisateur inscrit (l'admin) sur le blog
+        if(empty($user))
+        {
+            return view('Blog\Front.user');
+        }
+
+        return redirect()->route('login')->with('message', 'Il existe déjà un utilisateur sur ce blog, ');
+
     }
 
-    public function store(Request $request)
+
+    public function store(Request $request, UserRepositoryInterface $userRepository)
     {
-        $dobDay = $request->dobDay;
-        $dobMonth = $request->dobMonth;
-        $dobYear = $request->dobYear;
 
-        if($dobDay != 0 && $dobMonth != 0 && $dobYear != 0)
-        {
-        $dob = $dobYear . "-" . $dobMonth . "-" . $dobDay;
-        }
-        else
-            {
-                $dob = null;
-            }
+        $dob = $userRepository->dob($request);
+        $userRepository->save($request, $dob);
 
+        return redirect()->route('login')->with('status', 'Utilisateur inscrit!');
 
-        $data = $request->validate([
-
-            '_token'    => 'required',
-            'mail'      => 'required|email|max:100',
-            'password'  => 'required|min:10|alpha_num',
-            'pseudo'    => 'required|min:7|alpha_dash',
-            'firstName' => 'required|min:3',
-            'lastName'  => 'required|min:3',
-            'dobDay'    => "nullable",
-            'dobMonth'  => "nullable",
-            'dobYear'   => "nullable",
-            'pays'      => 'required|min:4',
-        ]);
-
-        if (!empty($data))
-        {
-            $user = new User;
-            $user->email = $data['mail'];
-            $user->password = Hash::make($data['password']);
-            $user->pseudo = $data['pseudo'];
-            $user->name = $data['lastName'];
-            $user->firstname = $data['firstName'];
-            $user->dob = $dob;
-            $user->pays = $data['pays'];
-            $user->remember_token = $data['_token'];
-            $user->save();
-            return redirect()->route('login')->with('status', 'Utilisateur inscrit!');
-        }
-        return redirect()->route('inscription')->with('status', 'inscription échoué');
     }
+
 
     public function login()
 {
     return view('Blog\Front\login');
 }
 
+
     public function verificationLogin(Request $request)
     {
-        $request->validate([
+        $data = $request->validate([
             'mail'      => 'required|min:10|max:100',
             'password'  => 'required|min:10'
         ]);
 
-            $mail = $request->mail;
-            $password = $request->password;
-            //Auth::check();
-          if(Auth::attempt(['email' => $mail, 'password' => $password]))
+          if(Auth::attempt(['email' => $data['mail'], 'password' => $data['password'] ]) )
           {
               return redirect()->intended('admin/liste-articles');
           }
-        return view('Blog\Front.index');
+        return redirect()->route('login')->with('message', 'Votre Email ou mot de passe est erroné');
     }
 
-    public function disconnection()
+
+    public function disconnection(Request $request)
     {
+
         Auth::logout();
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
         return view('Blog\Front\login');
     }
 }

@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
         $this->call(Category_paysTableSeeder::class);
         $this->call(Category_regionTableSeeder::class);
         $this->call(Category_provinceTableSeeder::class);
+        $this->call(SlugTableSeeder::class);
 
     }
 }

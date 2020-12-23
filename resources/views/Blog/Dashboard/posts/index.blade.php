@@ -2,68 +2,68 @@
 @section('content')
 
 
-    <button id="newArticle"><a href="{{route('create')}}">Creer un nouvel article</a></button>
-    @if(session('status'))
-        <div class="sessionStatus">
-            {{session('status')}}
-        </div>
-    @endif
+            @if(session('status'))
+                <div class="sessionStatus">
+                    {{session('status')}}
+                </div>
+            @endif
 
-    <div id="editorjs"></div>
-    <table id="postsIndexTable">
-        <caption>Liste des articles</caption>
-        <thead>
-            <tr>
-                <td>Voir</td>
-                <td>Modifier</td>
-                <td>Création article</td>
-                <td>Modification article</td>
-                <td>Titre</td>
-                <td>Contenu</td>
-                <td>Image principale</td>
-                <td>Supprimer</td>
-            </tr>
-        </thead>
-        <tbody>
+            @if(session('error'))
+                <div class="sessionError">
+                    {{session('error')}}
+                </div>
+            @endif
 
-        @isset($posts)
-        @foreach($posts as $post)
+            <table class="indexTable">
+                <caption>Liste des articles</caption>
+                <thead>
+                    <tr>
+                        <td>Voir</td>
+                        <td>Modifier</td>
+                        <td class="deleteMediaQueries">Création article</td>
+                        <td class="deleteMediaQueries">Modification article</td>
+                        <td>Titre</td>
+                        <td>Supprimer</td>
+                    </tr>
+                </thead>
+                <tbody>
 
-            <tr>
-                <td>
+                @isset($posts)
+                @foreach($posts as $post)
 
-                        <a href="{{ route('viewArticle', ['slug'=>$post->slug->slug]) }}">
+                    <tr>
+                        <td>
+                            <a href="{{ route('viewArticle', ['slug'=>$post->slug->slug]) }}">
+                                <img class="iconPostsIndex" src="{{asset('image/icon/view.png')}}"
+                                     alt="lire l'article" data-id="{{$post->id}}">
+                            </a>
+                        </td>
+                        <td>
+                            <a href="{{ route('edit',['slug'=>$post->slug->slug]) }}">
+                                <img class="iconPostsIndex" src="{{asset('image/icon/update.png')}}"
+                                    alt="modifier article" data-id="{{$post->id}}">
+                            </a>
+                        </td>
 
-                            <img class="iconPostsIndex" src="{{asset('image/icon/view.png')}}"
-                             alt="lire l'article" data-id="{{$post->id}}">
-                        </a>
-                </td>
-                <td>
-                    <a href="{{ route('edit',['slug'=>$post->slug->slug]) }}">
-                        <img class="iconPostsIndex" src="{{asset('image/icon/update.png')}}"
-                            alt="modifier article" data-id="{{$post->id}}">
-                    </a>
-                </td>
+                        <td class="deleteMediaQueries">{{$post->created_at->diffForHumans()}}</td>
+                        <td class="deleteMediaQueries">{{$post->updated_at->diffForHumans()}}</td>
+                        <td>{{Str::limit(($post->title),30, '...')}}</td>
 
-                <td>{{$post->created_at->diffForHumans()}}</td>
-                <td>{{$post->updated_at->diffForHumans()}}</td>
-                <td>{{Str::limit(($post->title),40, '...')}}</td>
-                <td>{{Str::limit(($post->content),255, '...')}}</td>
-                <td><img class="img" src="{{asset("image/$post->image")}}"></td>
-                <td>
+                        <td>
+                            <form action="{{ route('destroy', ['id'=>$post->slug->id]) }}" method="POST">
+                                @method('DELETE')
+                                @csrf
+                                <input class="iconPostsIndex" type="image" alt="icone delete"
+                                       src="{{asset('image/icon/delete.png')}}">
+                            </form>
+                        </td>
+                    </tr>
 
-                    <form action="{{ route('destroy', ['id'=>$post->id]) }}" method="POST">
-                        @method('DELETE')
-                        @csrf
-                        <input class="iconPostsIndex" type="image" src="{{asset('image/icon/delete.png')}}">
-                    </form>
-                </td>
-            </tr>
+                @endforeach
+                @endisset
 
-        @endforeach
-        @endisset
-        </tbody>
-    </table>
-    <script src="{{asset('js/emptyTagsLocalStorage.js')}}"></script>
+                </tbody>
+            </table>
+            <script src="{{asset('js/emptyTagsLocalStorage.js')}}"></script>
 
 @endsection

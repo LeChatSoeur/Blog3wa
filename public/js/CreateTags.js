@@ -1,12 +1,10 @@
+'use strict'
+
 let PreLocalStorage = []
-let tags            = document.querySelector('.tagsTextarea');
-let afficheTag      = document.querySelector('.afficheTag');
-let informationTag  = document.querySelector('.informationTag'); // icon I information
-let popupText       = document.querySelector('.popupText');
-let addArticle      = document.querySelector('.addArticle');
-let cancelArticle   = document.querySelector('.cancelArticle');
+let previewTag      = document.querySelector('.previewTag');
 let inputHiddenTags = document.querySelector('.inputHiddenTags');
-let json = localStorage.getItem('tags');
+let tags;
+let json            = localStorage.getItem('tags');
 
 
 function loadLocalStorage()
@@ -15,7 +13,7 @@ function loadLocalStorage()
     // puis " parse " pour ravoir un tableau et enfin recharger sur la page
     if(json !== null)
     {
-        console.log(json);
+
         json = JSON.parse(json);
         for(let i=0; i < json.length; i++)
         {
@@ -24,6 +22,7 @@ function loadLocalStorage()
         }
     }
 }
+
 
 function addLocalStorage(tableau)
 {
@@ -43,6 +42,7 @@ function addLocalStorage(tableau)
     }
 }
 
+
 function posterTag(tableau)
 {
     let dataName = tableau
@@ -51,7 +51,7 @@ function posterTag(tableau)
     div.classList.add('div')
     div.setAttribute('data-name', dataName);
 
-    afficheTag.append(div);
+    previewTag.append(div);
 
     div.innerHTML = tableau;
     // on efface textarea pour une nouvelle saisie après avoir afficher le tag
@@ -79,63 +79,75 @@ function deleteTag(targetDataSet)
             localStorage.setItem("tags", addLocalStorage)
 
             visibiltyDivTag()
-            break;
         }
     }
 }
 
+
 function visibiltyDivTag()
 {
-    console.log(afficheTag.textContent)
-    if (afficheTag.textContent !== "")
+
+    if (previewTag.textContent !== "")
     {
-        afficheTag.style.visibility = "visible";
+        previewTag.style.visibility = "visible";
     }
     else
     {
-        afficheTag.style.visibility = "hidden";
+        previewTag.style.visibility = "hidden";
     }
 }
 
 
+
+        ////////////////////////////////////////////////////////////
+        ////////////////////// CODE PRINCIPAL //////////////////////
+        ////////////////////////////////////////////////////////////
+
+
+
+
 document.addEventListener('DOMContentLoaded', () => {
+
+    tags = document.querySelector('.tagsTextarea');
 
     tags.addEventListener('keyup', function (e) {
         let entrer = e.keyCode
         let tag = tags.value;
         const reg = /^[a-zA-Z0-9-\s]+$/
-        // supprime les majuscules
         let tableau = tag.toLowerCase()
-        //regex pour supprimer les espaces avant après et dans la chaine de caractère
+
+        //supprime les espaces avant après et dans la chaine de caractère
         tableau = tableau.replace(/\s/g,'')
 
         // on test le regex s'il y a un caractère autre qu'une lettre alphabétique ou un nombre on efface textarea
-        if (reg.test(tag)) {
-            // Si on tape += 4 caractères et que l'on tape " " ou "entrer" on déclenche la function pour ajouter au localstorage
+        if (reg.test(tag))
+        {
+            // Si on ecrit au minimum 4 caractères et que l'on appuie sur
+            // la touche " espace " ou " entrer "
+            // on déclenche la function pour ajouter au localstorage
             if ((tableau.length >= 3 && tableau.length <= 25) && (entrer === 32 || entrer === 13))
             {
                 addLocalStorage(tableau);
                 visibiltyDivTag()
-
             }
-        } else
+        }
+        else
         {
             tags.value = ""
         }
     });
 
-    afficheTag.addEventListener('click', function (e)
+
+    previewTag.addEventListener('click', function (e)
     {
         let targetDataSet = e.target.dataset.name
         deleteTag(targetDataSet)
     });
 
-    informationTag.addEventListener('click', () => {
-        popupText.classList.toggle("show");
-    })
 
     loadLocalStorage()
     visibiltyDivTag()
+
 });
 
 

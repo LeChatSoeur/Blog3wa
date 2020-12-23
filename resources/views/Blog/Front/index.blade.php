@@ -1,11 +1,21 @@
 @extends('homeFront')
 @section('content')
-    @isset($posts)
+
+
+
+<div id="listArticle">
+
     @foreach($posts as $post)
-<article class="viewArticle" >
-        {!!($post->content) !!}
-    <p> salut je suis le Article</p>
-</article>
+        <article>
+            <div>{{$post->created_at->diffForHumans()}}</div>
+            <h3>
+                <a href="{{ route('viewArticle', ['slug'=>$post->slug->slug]) }}">{{Str::limit(($post->title),40, '...')}}
+                </a>
+            </h3>
+            <p>{!!substr($post->content, 0, 200), '...' !!}</p>
+        </article>
     @endforeach
-    @endisset
+</div>
+
+
 @endsection

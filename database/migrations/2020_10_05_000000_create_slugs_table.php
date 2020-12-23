@@ -16,7 +16,10 @@ class CreateSlugsTable extends Migration
         Schema::create('slugs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->string('slug', 30);
+            $table->string('slug', 50)->unique();
+            $table->string('nameNav', 50)->unique();
+            $table->unsignedBigInteger('orderNav_id')->nullable();
+            $table->unsignedBigInteger('child_id')->index();
         });
     }
 
@@ -27,8 +30,10 @@ class CreateSlugsTable extends Migration
      */
     public function down()
     {
+
         Schema::dropIfExists('posts');
         Schema::dropIfExists('choice_layouts');
+        Schema::dropIfExists('choice_contents');
         Schema::dropIfExists('slugs');
     }
 }
