@@ -4,8 +4,8 @@
             <section id="ViewArticle">
 
                 <article class="viewArticle" >
-                    <h2>{!!($post->title) !!}</h2>
-                    <p>{!!($post->content) !!}</p>
+                    <h2>{{($post[0]['title']) }}</h2>
+                    <p>{{($post[0]['content']) }}</p>
                 </article>
 
             </section>

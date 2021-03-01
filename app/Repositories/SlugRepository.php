@@ -33,6 +33,7 @@ class SlugRepository implements SlugsRepositoryInterface
 
     public function deleteSlugPage($slugsNav)
     {
+
         $slugNav = [];
         foreach ($slugsNav as $slug) {
 
@@ -55,6 +56,7 @@ class SlugRepository implements SlugsRepositoryInterface
 
     public function deleteSlugArticle($slugsPost)
     {
+
         foreach ($slugsPost as $slug) {
 
             if(Post::where('slug_id', $slug->id)->exists() === false)

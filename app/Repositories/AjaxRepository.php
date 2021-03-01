@@ -42,7 +42,7 @@ class AjaxRepository implements AjaxRepositoryInterface
             $filenametostore = $filename . '_' . time() . '.' . $extension;
 
             //Upload File
-            $request->file('img')->storeAs('public/uploads', $filenametostore);
+            $request->file('img')->move('storage/uploads', $filenametostore);
 
             return ($filenametostore);
         }

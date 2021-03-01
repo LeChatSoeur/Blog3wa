@@ -10,7 +10,6 @@ let buttonValid = document.getElementById('buttonValid')
 
 
 
-
 function forAjax(checkboxNav)
 {
         for (let i = 0; i < orderId.length; i++)
@@ -110,7 +109,7 @@ function deletePreview(p, previewNav)
 
     for(let i=0; i< orderJs.length; i++)
     {
-        previewNav.innerHTML += "<p>" + orderJs[i] + "</p>";
+        previewNav.innerHTML += `<p>${orderJs[i]}"</p>`;
 
     }
 }

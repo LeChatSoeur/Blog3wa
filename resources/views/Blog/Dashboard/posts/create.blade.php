@@ -64,11 +64,7 @@
                     </span>
                 </div>
 
-                <div class="previewTag"></div>
-                <div class="categoryTags">
-                    <textarea name="tags" class="tagsTextarea" placeholder="tags" rows="1"></textarea>
-                    <input class="inputHiddenTags" name="tags" type="hidden">
-                </div>
+
                 <input name="slug_id" type="hidden" value="{{$slug->id}}">
 
                 <div class="createButtons">
@@ -80,6 +76,6 @@
 
 
         <script src="{{asset('js/ajaxList.js')}}"></script>
-        <script src="{{asset('js/CreateTags.js')}}"></script>
+
 
         @endsection

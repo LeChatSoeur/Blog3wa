@@ -33,17 +33,17 @@ let url = 'categoryAjaxRegions';
             }
         });
     }
-            // fonction général pour afficher la catégorie désirée une fois la requête Ajax exécutée.
+    // fonction général pour afficher la catégorie désirée une fois la requête Ajax exécutée.
     function ViewCategory(category, select)
     {
         console.log(category);
         console.log(select);
-        let optionCategory = "<option value=''>---------</option>" ;
+        let optionCategory = `<option value=''>---------</option>` ;
 
 
         for (let i = 0; i < category.length; i++)
         {
-           optionCategory += "<option value=" + category[i].id + ">" + category[i].title + "</option>";
+           optionCategory += `<option value="${category[i].id}">${category[i].title}</option>`;
         }
         select.innerHTML = optionCategory;
     }
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () =>{
             divCategoryProvinces.style.visibility = 'hidden';
         }
 
-        div.style.visibility = "visible";
+        div.style.visibility = 'visible';
 
         CategoryAjax(categoryId,url, select )
     });
@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () =>{
     {
         let div                 = document.getElementById('categoryProvinces');
         let select              = document.getElementById('province');
-        div.style.visibility = "visible";
+        div.style.visibility = 'visible';
         let categoryId = regions;
         let url = 'categoryAjaxProvinces'
 

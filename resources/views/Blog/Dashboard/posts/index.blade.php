@@ -18,7 +18,7 @@
                 <caption>Liste des articles</caption>
                 <thead>
                     <tr>
-                        <td>Voir</td>
+
                         <td>Modifier</td>
                         <td class="deleteMediaQueries">Création article</td>
                         <td class="deleteMediaQueries">Modification article</td>
@@ -32,25 +32,21 @@
                 @foreach($posts as $post)
 
                     <tr>
+
+
                         <td>
-                            <a href="{{ route('viewArticle', ['slug'=>$post->slug->slug]) }}">
-                                <img class="iconPostsIndex" src="{{asset('image/icon/view.png')}}"
-                                     alt="lire l'article" data-id="{{$post->id}}">
-                            </a>
-                        </td>
-                        <td>
-                            <a href="{{ route('edit',['slug'=>$post->slug->slug]) }}">
+                            <a href="{{ route('edit',['slug'=>$post['slug_id']]) }}">
                                 <img class="iconPostsIndex" src="{{asset('image/icon/update.png')}}"
-                                    alt="modifier article" data-id="{{$post->id}}">
+                                     alt="modifier article" data-id="{{$post['id']}}">
                             </a>
                         </td>
 
-                        <td class="deleteMediaQueries">{{$post->created_at->diffForHumans()}}</td>
-                        <td class="deleteMediaQueries">{{$post->updated_at->diffForHumans()}}</td>
-                        <td>{{Str::limit(($post->title),30, '...')}}</td>
+                        <td class="deleteMediaQueries">{{$post['created_at']}}</td>
+                        <td class="deleteMediaQueries">{{$post['updated_at']}}</td>
+                        <td>{{Str::limit(($post['title']),30, '...')}}</td>
 
                         <td>
-                            <form action="{{ route('destroy', ['id'=>$post->slug->id]) }}" method="POST">
+                            <form action="{{ route('destroy', ['id'=>$post['slug_id']]) }}" method="POST">
                                 @method('DELETE')
                                 @csrf
                                 <input class="iconPostsIndex" type="image" alt="icone delete"

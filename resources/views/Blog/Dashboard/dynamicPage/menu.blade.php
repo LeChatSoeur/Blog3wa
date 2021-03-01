@@ -11,6 +11,11 @@
                         {{session('message')}}
                     </div>
                 @endif
+                <div id="noJs">
+                    <p>Cette section permet de créer une nouvelle page de manière dynamique ainsi que
+                        modifier l'ordre de votre barre de navigation, il semble que votre Javascript soit désactivé.
+                    Par conséquent vous ne pouvez pas utiliser pleinement cette section.</p>
+                </div>
 
             <div id="divButtonCreatePage">
                 <a href="{{ route('createSlug') }}">nouvelle page texte/image</a>
@@ -88,4 +93,5 @@
             </nav>
 
             <script src="{{asset('js/ordreNav.js')}}"></script>
+            <script src="{{asset('js/noJs.js')}}"></script>
 @endsection

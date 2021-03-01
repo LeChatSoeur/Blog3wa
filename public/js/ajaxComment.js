@@ -52,7 +52,7 @@ function ajaxComment(dataComment)
 
 function checkJson(json, dataComment)
 {
-
+// si la condition est remplis on appel la fonction commentPoster() sinon on appel la fonction Error()
     if(JSON.stringify(dataComment) === JSON.stringify(json))
     {
         commentPoster(json);
@@ -63,6 +63,8 @@ function checkJson(json, dataComment)
     }
 }
 
+//on affiche dynamiquement le commentaire pour que l'user puisse le voir sans réactualiser la page,
+// Une fois la page réactualisée ce sera php qui qffichera le commentaire.
 function commentPoster(json)
 {
     let divParent   = document.getElementById('commentsPoster');
@@ -105,12 +107,14 @@ function commentPoster(json)
             }
        }
     }
-    name.textContent    ='De: ' + json['nameUser'];
-    date.textContent    = "Le: a l'instant";
+   // name.textContent    ='De: ' + json['nameUser'];
+    name.textContent    =`De: ' ${json['nameUser']}`;
+    date.textContent    = `Le: a l'instant`;
     comment.textContent = json['content'];
     resetForm()
 }
 
+// à chaque envoie de commentaire on réinitialise les champs
 function resetForm()
 {
     document.getElementById('nameUser').value = "";
@@ -140,7 +144,7 @@ function error()
 }
 
 
-
+// on affiche l'erreur de la fonction error() pendant 5sec.
 function deleteErrorTime(form, p) {
 
     setTimeout( ()=>{

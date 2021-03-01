@@ -6,12 +6,12 @@
 
     <div id="{{$slugId->slug}}-image">
         @isset($choiceLayout->title)
-        <h2 class="titleHeader">{!!($choiceLayout->title) !!}</h2>
+        <h2 class="titleHeader">{{($choiceLayout->title) }}</h2>
         @endisset
     </div>
     <article id="{{$slugId->slug}}-widthContent" >
 
-        {!!($choiceContent->content) !!}
+        {{ ($choiceContent->content) }}
 
     </article>
 

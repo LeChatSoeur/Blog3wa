@@ -1,5 +1,5 @@
 'use strict'
-
+// on vide le localstorage à chaque nouvel article
 function emptyTags()
 {
     localStorage.removeItem('tags');

@@ -11,15 +11,15 @@ let input;
 
     function previewNameNav(input)
     {
-        inputNameNav.value = input;
+       inputNameNav.value = input;
     }
 
 
-
+// prévisualisation du slug en temps reel au moment ou l'user le tape.
     function previewSlug()
     {
         input = inputSlug.value;
-
+        // on traite l'input pour le transformer en slug.
         slug.textContent = (inputSlug.value).toLowerCase()
         .replace(/ /g,'-')
         .replace(/[^\w-]+/g,'')

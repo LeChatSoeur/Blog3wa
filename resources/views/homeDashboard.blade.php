@@ -14,8 +14,6 @@
 
                 <li><a href="{{ route('posts') }}">Liste Article</a></li>
                 <li><a href="{{route('createSlugArticle')}}">Creer article</a></li>
-                <li><a href="#">Statistiques</a></li>
-                <li><a href="#">Template</a></li>
                 <li><a href="{{route('menu')}}">Gérer mon menu</a></li>
                 <li><a href="{{route('disconnection')}}">Déconnexion</a></li>
             </ul>

@@ -31,7 +31,7 @@
 
 
             <form id="formComment" action="{{route('addAjaxComment')}}" method="POST"
-                  data-id="{{$post->id}}">
+                  data-id="{{$post[0]['id']}}">
                 @csrf
                 <input type="text" name="nameUser" id="nameUser" placeholder="Nom *">
                 <input type="text" name="email" id="email" placeholder="Email *">

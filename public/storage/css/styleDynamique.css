@@ -10,24 +10,92 @@
     display : flex;
     justify-content: center;
 }
-#a-propos-widthContent{
-    width: 80%;
-}
-#lorem-ipsum-widthContent{
-    width: 50%;
-}
-#tyhtyhrtrh-widthContent{
-    width: 50%;
-}
-#new-page-image{
-    background-image : url('../../storage/uploads/Fontaine_taxe_infos_generales_1608716815.jpg');
-    height : 273px;
+
+
+#testestes-image{
+    background-image : url('../../storage/uploads/6lCHxkm_1614267041.jpeg');
+    height : 268px;
     display : flex;
     justify-content: center;
 }
-#new-page-widthContent{
+#testestes-widthContent{
+    width: 80%;
+}
+#tgtrgttgtr-image{
+    background-image : url('storage/app/public/uploads/6lCHxkm_1614267737.jpeg');
+    height : 228px;
+    display : flex;
+    justify-content: center;
+}
+#tgtrgttgtr-widthContent{
+    width: 80%;
+}
+#hnhgnhgnhgnhgn-image{
+    background-image : url('storage/app/public/uploads/6lCHxkm_1614268192.jpeg');
+    height : 204px;
+    display : flex;
+    justify-content: center;
+}
+#hnhgnhgnhgnhgn-widthContent{
+    width: 80%;
+}
+#gffbgbgbgb-widthContent{
+    width: 80%;
+}
+#trtrgtrg-image{
+    background-image : url('../../storage/uploads/planche­bois_1614269424.jpg');
+    height : 146px;
+    display : flex;
+    justify-content: center;
+}
+#trtrgtrg-widthContent{
+    width: 80%;
+}
+#gbgfgbgfbfb-image{
+    background-image : url('../../storage/uploads/6lCHxkm_1614269533.jpeg');
+    height : 276px;
+    display : flex;
+    justify-content: center;
+}
+#gbgfgbgfbfb-widthContent{
+    width: 80%;
+}
+#gfbgfbgbggfggbgfg-widthContent{
+    width: 80%;
+}
+#salut-je-suis-le-lien-widthContent{
+    width: 80%;
+}
+#je-suis-ici-pour-le-code-image{
+    background-image : url('../../storage/uploads/6lCHxkm_1614283481.jpeg');
+    height : 320px;
+    display : flex;
+    justify-content: center;
+}
+#je-suis-ici-pour-le-code-widthContent{
+    width: 80%;
+}
+#gmngjmgmgnmghjmng-widthContent{
     width: 50%;
 }
-#3w-academy-widthContent{
+#cwrerere-widthContent{
+    width: 50%;
+}
+#tgtrgtrgrtggtrgtrgtr-image{
+    background-image : url('../../storage/uploads/6lCHxkm_1614355927.jpeg');
+    height : 239px;
+    display : flex;
+    justify-content: center;
+}
+#tgtrgtrgrtggtrgtrgtr-widthContent{
+    width: 80%;
+}
+#regrrregregrer-image{
+    background-image : url('../../storage/uploads/6lCHxkm_1614606920.jpeg');
+    height : 245px;
+    display : flex;
+    justify-content: center;
+}
+#regrrregregrer-widthContent{
     width: 80%;
 }

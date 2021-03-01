@@ -46,6 +46,7 @@ function information(data)
 }
 
 
+
 function prepareHeader(checkBox)
 {
 
@@ -61,6 +62,8 @@ function prepareHeader(checkBox)
         ajax(url, formData);
     });
 }
+
+
 
 function ajax(url, formData)
 {
@@ -80,6 +83,8 @@ function ajax(url, formData)
         .catch(error => console.error(error));
 }
 
+
+
 function processJson(json)
 {
 
@@ -92,10 +97,12 @@ function processJson(json)
 
 }
 
-function previewImageHeader(image)
+// on fait une preview de l'image en temps reel dès le retour de la reponse en ajax
+function previewImageHeader(json)
 {
 
-    let url = "url('" + "../storage/uploads/"  + image[0] + "')";
+
+    let url = `url("../storage/uploads/${json}")`;
     previewHeader.style.display = "flex";
     previewHeader.style.backgroundImage = url;
     previewHeader.style.width = "100%";

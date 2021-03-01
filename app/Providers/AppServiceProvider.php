@@ -8,6 +8,8 @@ use App\Repositories\DynamicPageRepository;
 use App\Repositories\DynamicPagesRepositoryInterface;
 use App\Repositories\NavRepository;
 use App\Repositories\NavsRepositoryInterface;
+use App\Repositories\PdoRepository;
+use App\Repositories\PdoRepositoryInterface;
 use App\Repositories\SlugRepository;
 use App\Repositories\SlugsRepositoryInterface;
 use App\Repositories\UserRepository;
@@ -52,6 +54,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             UserRepositoryInterface::class,
             UserRepository::class,
+        );
+
+        $this->app->bind(
+            PdoRepositoryInterface::class,
+            PdoRepository::class,
         );
 
 

@@ -42,7 +42,7 @@ function addLocalStorage(tableau)
     }
 }
 
-
+// on affiche le tag une fois validé
 function posterTag(tableau)
 {
     let dataName = tableau
@@ -58,7 +58,7 @@ function posterTag(tableau)
     tags.value = ""
 }
 
-
+//on supprime le tag
 function deleteTag(targetDataSet)
 {
     let divTags = document.querySelectorAll(`div[data-name]`)

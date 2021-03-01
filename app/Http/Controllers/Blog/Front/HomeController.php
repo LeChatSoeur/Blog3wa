@@ -9,6 +9,7 @@ use App\Models\Blog\Dashboard\Slug;
 use App\Models\Blog\Front\Comment;
 use App\Models\Blog\Post;
 use App\Repositories\NavsRepositoryInterface;
+use App\Repositories\PdoRepositoryInterface;
 use App\Repositories\PostRepository;
 
 
@@ -27,14 +28,17 @@ class HomeController extends Controller
 
 
 
-    public function viewArticle($slug, NavsRepositoryInterface $NavRepository, PostRepository $PostRepository)
+    public function viewArticle($slug, PdoRepositoryInterface $pdoRepository,
+                                        NavsRepositoryInterface $NavRepository,
+                                        PostRepository $PostRepository)
     {
+        $pdo = $pdoRepository->pdo();
         $orderNav =$NavRepository->navSlug();
         $listArticles = $NavRepository->listArticles();
 
-        $post = $PostRepository->post($slug);
+        $post = $PostRepository->post($slug, $pdo);
 
-        $comments = Comment::where('post_id', $post->id)->get();
+        $comments = Comment::where('post_id', $post[0]['id'])->get();
         $commentsParent = [];
         $commentsChild = [];
 

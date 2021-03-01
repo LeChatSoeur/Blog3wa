@@ -8,11 +8,11 @@ interface PostsRepositoryInterface
 {
     public function save($request);
 
-    public function post($slug);
+    public function post($slug, $pdo);
 
     public function update($request, $id);
 
-    public function destroy($id);
+    public function destroy($id, $pdo);
 
 
 }
